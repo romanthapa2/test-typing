@@ -3,19 +3,22 @@ dotenv.config();
 import app from "./app";
 import connectMongoDB from "./db";
 import { createServer } from "http";
-import {Server} from "socket.io"
+import { startSocketOneVersusOne } from "./socket/1v1";
 
 const port = process.env.PORT || 3000;
 
 const server = createServer(app);
-const io = new Server(server);
 
-connectMongoDB()
-  .then(() => {
-    app.listen(port, () => {
+async function startServer() {
+  try {
+    await connectMongoDB();
+    startSocketOneVersusOne(server);
+    server.listen(port, () => {
       console.log(`Server is running on port ${port}`);
     });
-  })
-  .catch((error: Error) => {
+  } catch (error: unknown) {
     console.log("mongodb connection failed", error);
-  });
+  }
+}
+
+startServer();

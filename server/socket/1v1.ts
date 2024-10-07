@@ -1,5 +1,6 @@
 import { Server } from 'socket.io';
 import { QuoteLengthType, OneVersusOneStateType } from './types.ts';
+import { generateCode, fetchQuote, startCountdown } from './helper.ts';
 
 export function startSocketOneVersusOne(server: any) {
 
@@ -26,5 +27,34 @@ export function startSocketOneVersusOne(server: any) {
       socket.emit('has-joined-room', roomCode);
       io1v1.to(roomCode).emit('room-state', roomState[roomCode]);
     });
+
+
+socket.on('join-room', (roomCode: string) => {
+  if (!roomState.hasOwnProperty(roomCode)) {
+    socket.emit('join-room-error');
+    return;
+  }
+
+  clientRooms[socket.id] = roomCode;
+  roomState[roomCode].players.player2 = {
+    id: socket.id,
+    wordIndex: 0,
+    charIndex: 0,
+  };
+  socket.join(roomCode);
+  socket.emit('has-joined-room', roomCode);
+
+  fetchQuote(roomState[roomCode].quoteLength)
+    .then((quote: string) => {
+      roomState[roomCode].testText = quote;
+      io1v1.to(roomCode).emit('test-text', quote);
+    })
+    .then(() => {
+      startCountdown(roomCode, io1v1);
+    });
+
+  io1v1.to(roomCode).emit('room-state', roomState[roomCode]);
+});
+
 });
 }
