@@ -56,5 +56,31 @@ socket.on('join-room', (roomCode: string) => {
   io1v1.to(roomCode).emit('room-state', roomState[roomCode]);
 });
 
+socket.on(
+  'cursur-position-change',
+  ({ wordIndex, charIndex }: { wordIndex: number; charIndex: number }) => {
+    const roomCode = clientRooms[socket.id];
+
+    if (!roomCode || !roomState[roomCode]) {
+      return;
+    }
+
+    const player =
+      roomState[roomCode].players.player1.id === socket.id
+        ? 'player1'
+        : 'player2';
+
+    roomState[roomCode].players[player] = {
+      id: roomState[roomCode].players[player]!.id,
+      wordIndex,
+      charIndex,
+    };
+
+    socket.broadcast
+      .to(roomCode)
+      .emit('cursur-position-change', { player, wordIndex, charIndex });
+  }
+);
+
 });
 }
