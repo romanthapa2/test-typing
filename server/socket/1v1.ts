@@ -82,5 +82,34 @@ socket.on(
   }
 );
 
+socket.on('result', (result) => {
+  const roomCode = clientRooms[socket.id];
+
+  if (!roomCode || !roomState.hasOwnProperty(roomCode)) {
+    console.error("room doesn't exist");
+    return;
+  }
+
+  const player =
+    roomState[roomCode].players.player1.id === socket.id ? 'player1' : 'player2';
+
+  const opponentPlayer = player === 'player1' ? 'player2' : 'player1';
+
+  if (roomState[roomCode].players[player]) {
+    roomState[roomCode].players[player]!.result = result;
+
+    const typedWords = roomState[roomCode].testText?.split(' ')!;
+    io1v1.to(roomCode).emit('caret-position-change', {
+      player,
+      wordIndex: typedWords.length - 1,
+      charIndex: typedWords[typedWords.length - 1].length,
+    });
+  }
+
+  if (roomState[roomCode].players[opponentPlayer]?.result) {
+    io1v1.to(roomCode).emit('players-state', roomState[roomCode].players);
+  }
+});
+
 });
 }
