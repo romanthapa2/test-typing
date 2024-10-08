@@ -111,5 +111,47 @@ socket.on('result', (result) => {
   }
 });
 
+socket.on('play-again', () => {
+  const roomCode = clientRooms[socket.id];
+
+  if (!roomCode || !roomState.hasOwnProperty(roomCode)) {
+    console.error("room doesn't exist");
+    return;
+  }
+
+  let state = roomState[roomCode];
+
+  const player = state.players.player1.id === socket.id ? 'player1' : 'player2';
+
+  const opponentPlayer = player === 'player1' ? 'player2' : 'player1';
+
+  if (state.players[opponentPlayer]?.playAgain) {
+    roomState[roomCode] = {
+      testText: '',
+      quoteLength: state.quoteLength,
+      players: {
+        player1: { id: state.players.player1.id, wordIndex: 0, charIndex: 0 },
+        player2: { id: state.players.player2!.id, wordIndex: 0, charIndex: 0 },
+      },
+    };
+
+    io1v1.to(roomCode).emit('room-state', roomState[roomCode]);
+
+    fetchQuote(state.quoteLength)
+      .then((quote: string) => {
+        roomState[roomCode].testText = quote;
+        io1v1.to(roomCode).emit('test-text', quote);
+      })
+      .then(() => {
+        startCountdown(roomCode, io1v1);
+      });
+  } else {
+    roomState[roomCode].players[player]!.playAgain = true;
+
+    io1v1.to(state.players[opponentPlayer]!.id).emit('opponent-play-again');
+  }
+});
+
+
 });
 }
