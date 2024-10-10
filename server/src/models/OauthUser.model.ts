@@ -28,7 +28,7 @@ const oauthUserSchema = new Schema({
   },
 });
 
-oauthUserSchema.post("save", (err: any, doc: any, next: any): void => {
+oauthUserSchema.post("save", (err: any, next: any): void => {
   if (err.code === 11000) {
     const field = Object.keys(err.keyValue)[0];
 
