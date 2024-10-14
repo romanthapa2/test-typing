@@ -342,3 +342,37 @@ export async function ChangeUsername(
     next(err);
   }
 }
+
+export async function ChangePassword(
+  req: AuthenticatedRequest<
+    any,
+    Response,
+    { oldPassword: string; newPassword: string }
+  >,
+  res: Response,
+  next: NextFunction
+) {
+  if (req.user?.platform) {
+    next(new Error());
+  }
+
+  const { oldPassword, newPassword } = req.body;
+  const username = req.user!.username;
+
+  try {
+    const user = (await User.findOne({ username }))!;
+
+    const passwordMatches = await user.comparePassword(oldPassword);
+
+    if (!passwordMatches) {
+      throw new ValidationError('Incorrect password!', 'password');
+    }
+
+    user.password = newPassword;
+    user.save();
+
+    res.json({ message: 'Password changed successfully!' });
+  } catch (err) {
+    next(err);
+  }
+}
