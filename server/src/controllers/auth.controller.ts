@@ -365,7 +365,7 @@ export async function ChangePassword(
     const passwordMatches = await user.comparePassword(oldPassword);
 
     if (!passwordMatches) {
-      throw new ValidationError('Incorrect password!', 'password');
+      throw new ApiError(400,'Incorrect password!');
     }
 
     user.password = newPassword;
