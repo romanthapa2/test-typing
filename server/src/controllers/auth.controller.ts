@@ -4,10 +4,12 @@ import axios from "axios";
 import OauthUser from "../models/OauthUser.model";
 import Profile from "../models/profile.model";
 import { ApiError } from "../utils/apiError.utils";
+import User,{UserProperties} from "../models/user.model";
+import jwt from "jsonwebtoken";
 
 const clientOriginalURL = "http://localhost:3000";
 
-export async function httpGithubAccessToken(
+export async function GithubAccessToken(
   req: Request<any, Response, any, { code: string }>,
   res: Response,
   next: NextFunction
@@ -85,7 +87,7 @@ export async function httpGithubAccessToken(
   }
 }
 
-export async function httpGithubFinalSteps(
+export async function GithubFinalSteps(
   req: AuthenticatedRequest<any, Response, { username: string }>,
   res: Response,
   next: NextFunction
@@ -131,7 +133,7 @@ export async function httpGithubFinalSteps(
 }
 
 
-export async function httpGoogleAccessToken(
+export async function GoogleAccessToken(
   req: Request<any, Response, any, { code: string; scope: string; state: string }>,
   res: Response,
   next: NextFunction
@@ -185,7 +187,7 @@ export async function httpGoogleAccessToken(
 }
 
 
-export async function httpGoogleFinalSteps(
+export async function GoogleFinalSteps(
   req: Request<any, Response, { username: string }>,
   res: Response,
   next: NextFunction
@@ -227,6 +229,115 @@ export async function httpGoogleFinalSteps(
     await profile.save();
 
     res.json({ username });
+  } catch (err) {
+    next(err);
+  }
+}
+
+
+export async function CreateAccount(
+  req: Request<any, Response, UserProperties>,
+  res: Response,
+  next: NextFunction
+) {
+  const { username, email, password } = req.body;
+
+  try {
+    const jwtSecret = process.env.JWT_SECRET!;
+    const user = new User({ username, email, password });
+    await user.save();
+
+    const profile = new Profile({ _id: user._id });
+    await profile.save();
+
+    const token = jwt.sign({ userId: user._id }, jwtSecret);
+
+    res.cookie('token', JSON.stringify({ value: token }), {
+      secure: true,
+      httpOnly: true,
+      sameSite: 'strict',
+    });
+    res.json({ username });
+  } catch (err: any) {
+    next(err);
+  }
+}
+
+export async function Login(
+  req: Request<any, Response, UserProperties>,
+  res: Response,
+  next: NextFunction
+) {
+  const { email, username, password } = req.body;
+
+  try {
+    const user = (await User.findOne(username ? { username } : { email }))!;
+
+    const passwordMatches = await user.comparePassword(password);
+
+    if (!passwordMatches) {
+      throw new ApiError(400,'Incorrect password!');
+    }
+
+    const jwtSecret = process.env.JWT_SECRET!;
+
+    const token = jwt.sign({ userId: user._id }, jwtSecret);
+    res.cookie('token', JSON.stringify({ value: token }), {
+      secure: true,
+      httpOnly: true,
+      sameSite: 'strict',
+    });
+    res.json({ message: 'Logged in successfully!' });
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function Logout(req: Request, res: Response, next: NextFunction) {
+  try {
+    res.clearCookie('token', { secure: true, httpOnly: true, sameSite: 'strict' });
+    res.json({ message: 'Logged out successfully!' });
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function ChangeUsername(
+  req: AuthenticatedRequest<
+    any,
+    Response,
+    { password: string; newUsername: string }
+  >,
+  res: Response,
+  next: NextFunction
+) {
+  const { password, newUsername } = req.body;
+  const username = req.user!.username;
+
+  try {
+    if (!req.user?.platform) {
+      const user = (await User.findOne({ username }))!;
+
+      const passwordMatches = await user.comparePassword(password);
+
+      if (!passwordMatches) {
+        throw new ApiError(400,'Incorrect password!');
+      }
+
+      user.$set('username', newUsername);
+      await user.save();
+    } else {
+      const oauthUser = await OauthUser.findOne({ username });
+
+      if (!oauthUser) {
+        throw new ApiError(400,'User not found!');
+      }
+
+      oauthUser.$set('username', newUsername);
+      await oauthUser.save();
+    }
+
+    res.json({ username: newUsername });
   } catch (err) {
     next(err);
   }
