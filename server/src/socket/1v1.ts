@@ -1,6 +1,6 @@
 import { Server } from "socket.io";
-import { QuoteLengthType, OneVersusOneStateType } from "./types.ts";
-import { generateCode, fetchQuote, startCountdown } from "./helper.ts";
+import { QuoteLengthType, OneVersusOneStateType } from "./types";
+import { generateCode, fetchQuote, startCountdown } from "./helper";
 
 export function startSocketOneVersusOne(server: any) {
   const io = new Server(server);
