@@ -4,6 +4,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import { Request, Response, NextFunction } from "express";
 import { ApiError } from "./utils/apiError.utils";
+import authRouter from "./routes/auth.router";
 
 const app: Application = express();
 app.use(
@@ -17,6 +18,9 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
+
+
+app.use('/auth', authRouter);
 
 
 app.use((err: ApiError, req: Request, res: Response, next: NextFunction) => {
