@@ -18,7 +18,7 @@ export async function TypingStarted(
       { _id: user._id },
       { $inc: { 'stats.testsStarted': 1 } }
     );
-    return res.json({ message: 'Success!' });
+    res.json({ message: 'Success!' });
   } catch (err) {
     next(err);
   }
