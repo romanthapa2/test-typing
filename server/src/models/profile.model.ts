@@ -61,7 +61,7 @@ const profileSchema = new Schema({
         type: [{ wpm: Number, accuracy: Number, raw: Number, second: Number }],
         required: true,
       },
-      errors: { type: Number, required: true },
+      errorsTyped: { type: Number, required: true },
       testType: { type: String, required: true },
       date: { type: Date, required: true },
       quoteAuthor: { type: String },

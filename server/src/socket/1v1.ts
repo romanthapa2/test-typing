@@ -37,7 +37,7 @@ export function startSocketOneVersusOne(server: any) {
       roomState[roomCode].players.player2 = {
         id: socket.id,
         wordIndex: 0,
-        charIndex: 0, 
+        charIndex: 0,
       };
       socket.join(roomCode);
       socket.emit("has-joined-room", roomCode);
@@ -161,7 +161,6 @@ export function startSocketOneVersusOne(server: any) {
       }
     });
 
-
     const handleRoomDisconnect = () => {
       const roomCode = clientRooms[socket.id];
 
@@ -172,22 +171,26 @@ export function startSocketOneVersusOne(server: any) {
       delete clientRooms[socket.id];
 
       const player =
-        roomState[roomCode].players.player1.id === socket.id ? 'player1' : 'player2';
+        roomState[roomCode].players.player1.id === socket.id
+          ? "player1"
+          : "player2";
 
       const opponentPlayerState =
-        roomState[roomCode].players[player === 'player1' ? 'player2' : 'player1'];
+        roomState[roomCode].players[
+          player === "player1" ? "player2" : "player1"
+        ];
 
       if (!opponentPlayerState || opponentPlayerState?.disconnected) {
         delete roomState[roomCode];
       } else {
         roomState[roomCode].players[player]!.disconnected = true;
-        io1v1.to(opponentPlayerState.id).emit('opponent-disconnected');
+        io1v1.to(opponentPlayerState.id).emit("opponent-disconnected");
       }
     };
 
-    socket.on('leave-room', handleRoomDisconnect);
-    socket.on('disconnect', () => {
-      console.log('Disconnected: ', socket.id);
+    socket.on("leave-room", handleRoomDisconnect);
+    socket.on("disconnect", () => {
+      console.log("Disconnected: ", socket.id);
       handleRoomDisconnect();
     });
   });
