@@ -1,8 +1,5 @@
 import { Router } from 'express';
 import {
-  
-  GithubAccessToken,
-  GithubFinalSteps,
   GoogleAccessToken,
   GoogleFinalSteps,
   CreateAccount,
@@ -13,9 +10,6 @@ import {
 } from '../controllers/auth.controller';
 
 const authRouter = Router();
-
-authRouter.get('/github/access-token', GithubAccessToken);
-authRouter.post('/github/final-steps', GithubFinalSteps);
 
 
 authRouter.get('/google/access-token', GoogleAccessToken);
