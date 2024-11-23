@@ -13,24 +13,45 @@ export function generateCode(length: number) {
   return output;
 }
 
-export async function fetchQuote(length: QuoteLengthType) {
-  const res = await axios
-    .get(
-      `https://api.quotable.io/random${
-        length === 'short'
-          ? '?maxLength=100'
-          : length === 'medium'
-          ? '?minLength=101&maxLength=250'
-          : length === 'long'
-          ? '?minLength=251'
-          : ''
-      }`
-    )
-    .then((res: any) => {
-      return res.data.content.replace(/—/g, '-').replace(/…/g, '...');
-    });
+// export async function fetchQuote(length: QuoteLengthType) {
+//   const data = await axios
+//     .get(
+//       `https://random-word-api.vercel.app/api?${
+//         length === 'short'
+//           ? '?words=20'
+//           : length === 'medium'
+//           ? '?words=30'
+//           : length === 'long'
+//           ? '?words=40'
+//           : ''
+//       }`
+//     )
+//     .then((res: any) => {
+//       res = Array.isArray(data) ? data.join(' ') : String(data);
+//       return res.replace(/—/g, '-').replace(/…/g, '...');
+//     });
 
-  return res;
+//   return data;
+// }
+
+export async function fetchQuote(length: QuoteLengthType) {
+  const wordCount =
+    length === 'short' ? 20 : length === 'medium' ? 30 : length === 'long' ? 40 : 0;
+
+  try {
+    const { data } = await axios.get(
+      `https://random-word-api.vercel.app/api?words=${wordCount}`
+    );
+
+
+    const res = Array.isArray(data) ? data.join(' ') : String(data);
+
+
+    return res.replace(/—/g, '-').replace(/…/g, '...');
+  } catch (error) {
+    console.error('Error fetching quote:', error);
+    throw error;
+  }
 }
 
 export function startCountdown(roomCode: string, io1v1: Namespace) {
