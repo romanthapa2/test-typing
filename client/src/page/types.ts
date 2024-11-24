@@ -22,3 +22,7 @@ export type TypingResult = {
   };
   
   export type QuoteLengthType = 'short' | 'medium' | 'long' | 'all';
+
+  export type ResultOptions = {
+    includeDate?: boolean;
+  };
