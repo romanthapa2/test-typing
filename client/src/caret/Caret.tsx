@@ -26,8 +26,6 @@ export default function Caret(props: Props) {
   } = props;
 
   const { typingStarted } = useContext(TypingContext);
-  // const { profile } = useContext(ProfileContext);
-
   const [caretPos, setCaretPos] = useState({ x: 0, y: 0 });
   const [charWidth, setCharWidth] = useState(0);
 
