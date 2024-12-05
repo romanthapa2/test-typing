@@ -1,0 +1,45 @@
+.button {
+    border-radius: 10px;
+    padding: 0.5rem 1rem;
+    color: var(--clr-char-correct);
+    cursor: pointer;
+    transition: opacity 175ms, background-color 75ms;
+    opacity: 0.7;
+  }
+  
+  .button:hover:not(.button--disabled),
+  .button:focus-visible:not(.button--disabled) {
+    opacity: 1;
+  }
+  
+  .button:active:not(.button--disabled),
+  .button.active {
+    opacity: 1;
+    background-color: var(--clr-tooltip-bg);
+    color: var(--clr-tooltip-text);
+  }
+  
+  .button--2 {
+    background-color: var(--clr-tooltip-bg);
+    color: var(--clr-tooltip-text);
+  }
+  
+  .button--disabled {
+    cursor: default;
+    opacity: 0.5;
+  }
+  
+  .button--loading {
+    position: relative;
+    color: rgba(0, 0, 0, 0);
+    opacity: 1;
+  }
+  
+  .loadingSpinner {
+    position: absolute;
+    font-size: 9px;
+    top: calc(50% + 2px);
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  

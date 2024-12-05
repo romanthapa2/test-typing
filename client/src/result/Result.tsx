@@ -13,7 +13,9 @@ import {
 import { TypingContext } from '../context/Typing.context';
 import { TypingResult } from '../types';
 import { addColorOpacity, getTimeSince } from '../helper';
-import { ButtonRounded, PercentCircleChart, Tooltip } from '../UI';
+import  ButtonRounded  from '../UI/ButtomRounded/ButtomRounded';
+import PercentCircleChart from '../UI/PercentCircleChart/PercentCircleChart';
+import Tooltip from '../UI/Tooltip';
 import ResultCustomTooltip from '../ResultCustomTooltip';
 import styles from './Result.module.scss';
 
