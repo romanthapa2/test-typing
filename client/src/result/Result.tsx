@@ -16,7 +16,7 @@ import { addColorOpacity, getTimeSince } from '../helper';
 import  ButtonRounded  from '../UI/ButtomRounded/ButtomRounded';
 import PercentCircleChart from '../UI/PercentCircleChart/PercentCircleChart';
 import Tooltip from '../UI/Tooltip';
-import ResultCustomTooltip from '../ResultCustomTooltip';
+import ResultCustomTooltip from '../components/ResultCustomToolTip/ResultCustomTooltip';
 import styles from './Result.module.scss';
 
 export type ResultOptions = {
