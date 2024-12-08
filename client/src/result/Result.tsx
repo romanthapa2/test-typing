@@ -17,7 +17,7 @@ import  ButtonRounded  from '../UI/ButtomRounded/ButtomRounded';
 import PercentCircleChart from '../UI/PercentCircleChart/PercentCircleChart';
 import Tooltip from '../UI/Tooltip';
 import ResultCustomTooltip from '../components/ResultCustomToolTip/ResultCustomTooltip';
-import styles from './Result.module.scss';
+import "./Result.css"
 
 export type ResultOptions = {
   includeDate?: boolean;
@@ -60,28 +60,28 @@ export default function Result(props: Props) {
   } = result.timeline[result.timeline.length - 1];
 
   return (
-    <div className={styles['result__wrapper']}>
+    <div className='result__wrapper'>
       {includeDate && result.date && (
         <Tooltip text={result.date.toLocaleString()} position="top" showOnHover>
-          <div className={styles.date}>{getTimeSince(result.date)}</div>
+          <div className='date'>{getTimeSince(result.date)}</div>
         </Tooltip>
       )}
-      <div className={styles.result}>
-        <div className={styles['wpm-accuracy-container']}>
-          <div className={styles.wpm}>
+      <div className='result'>
+        <div className='wpm-accuracy-container'>
+          <div className='wpm'>
             <p>WPM</p>
-            <p className={styles['wpm__num']}>{wpm}</p>
+            <p className='wpm__num'>{wpm}</p>
           </div>
-          <div className={styles.accuracy}>
+          <div className='accuracy'>
             <p>Accuracy</p>
             <PercentCircleChart
               percentage={accuracy}
-              className={styles['percentage-circle']}
+              className='percentage-circle'
             />
           </div>
         </div>
-        <div className={styles.chart}>
-          <ResponsiveContainer className={styles.chart}>
+        <div className='chart'>
+          <ResponsiveContainer className='chart'>
             <LineChart data={result.timeline}>
               <XAxis dataKey="second" />
               <YAxis dataKey="raw" yAxisId="left">
@@ -92,7 +92,7 @@ export default function Result(props: Props) {
                   fontSize={config.labelFontSize}
                   position="right"
                   offset={config.labelOffset}
-                  className={styles.label}
+                  className='label'
                 />
               </YAxis>
               <YAxis
@@ -108,10 +108,10 @@ export default function Result(props: Props) {
                   fontSize={config.labelFontSize}
                   position="left"
                   offset={config.labelOffset}
-                  className={styles.label}
+                  className='label'
                 />
               </YAxis>
-              <CartesianGrid className={styles.cartesianGrid} />
+              <CartesianGrid className='cartesianGrid' />
               <RechartsTooltip content={<ResultCustomTooltip />} />
               <Legend />
               <Line
@@ -154,66 +154,66 @@ export default function Result(props: Props) {
           </ResponsiveContainer>
         </div>
       </div>
-      <div className={styles['more-and-restart']}>
-        <div className={styles.more}>
+      <div className='more-and-restart'>
+        <div className='more'>
           {result.testType && (
-            <div className={styles.item}>
-              <p className={`${styles['item__heading']} ${styles['raw-heading']}`}>
+            <div className='item'>
+              <p className='item__heading raw-heading'>
                 test type
               </p>
-              <p className={styles['item__value']}>{result.testType}</p>
+              <p className='item__value'>{result.testType}</p>
             </div>
           )}
-          <div className={styles.item}>
-            <p className={`${styles['item__heading']} ${styles['raw-heading']}`}>
+          <div className='item'>
+            <p className='item__heading raw-heading'>
               raw
             </p>
-            <p className={styles['item__value']}>{raw}</p>
+            <p className='item__value'>{raw}</p>
           </div>
-          <div className={styles.item}>
+          <div className='item'>
             <p
-              className={`${styles['item__heading']} ${styles['error-heading']} ${
-                result.errors === 0 ? styles['error-heading--noerrors'] : ''
+              className={`item__heading error-heading ${
+                result.errors === 0 ? 'error-heading--noerrors' : ''
               }`}
             >
               errors
             </p>
-            <p className={styles['item__value']}>{result.errors}</p>
+            <p className='item__value'>{result.errors}</p>
           </div>
-          <div className={styles.item}>
-            <p className={styles['item__heading']}>time</p>
-            <p className={styles['item__value']}>{timeTook}s</p>
+          <div className='item'>
+            <p className='item__heading'>time</p>
+            <p className='item__value'>{timeTook}s</p>
           </div>
           {result.quoteAuthor && (
-            <div className={styles.item}>
-              <p className={styles['item__heading']}>quote author</p>
+            <div className='item'>
+              <p className='item__heading'>quote author</p>
               <p
-                className={`${styles['item__value']} ${styles['quote-author-value']}`}
+                className='item__value quote-author-value'
               >
                 {result.quoteAuthor}
               </p>
             </div>
           )}
         </div>
-        <div className={styles['buttons-wrapper']}>
+        <div className='buttons-wrapper'>
           {onRestart && (
-            <ButtonRounded onClick={onRestart} className={styles.btn}>
+            <ButtonRounded onClick={onRestart} className='btn'>
               <img src="/keyboard_arrow_left" alt="keyboard_arrow_left"
-                className={`${styles['btn__icon']} ${styles['btn__icon--arrow']}`}
+                className='btn__icon btn__icon--arrow'
               />
               <span>Next Test</span>
             </ButtonRounded>
           )}
           {onRepeat && (
-            <ButtonRounded onClick={onRepeat} className={styles.btn}>
-              <img src='/loop' alt='loop' className={styles['btn__icon']} />
+            <ButtonRounded onClick={onRepeat} className='btn'>
+              <img src='/loop' alt='loop' className='btn__icon' />
               <span>Repeat</span>
             </ButtonRounded>
           )}
           {onGoBack && (
-            <ButtonRounded onClick={onGoBack} className={styles.btn}>
+            <ButtonRounded onClick={onGoBack} className='btn'>
               <img src='keyboard_arrow_left' alt='keyboard_arrow_left'
-                className={`${styles['btn__icon']} ${styles['btn__icon--arrow']}`}
+                className='btn__icon btn__icon--arrow'
               />
               <span>Go Back</span>
             </ButtonRounded>
