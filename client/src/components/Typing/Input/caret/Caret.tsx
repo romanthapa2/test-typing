@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { TypingContext } from "../context/Typing.context";
+import { TypingContext } from "../../../../context/Typing.context";
 import "./Caret.css"
 
 interface Props {

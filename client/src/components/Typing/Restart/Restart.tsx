@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { IconRefresh } from '@/assets/image';
+import refresh from "../../../../public/refresh.svg"
 import  ButtonRounded  from '../../UI/ButtomRounded/ButtomRounded';
 import Tooltip from '../../UI/Tooltip';
 import './Restart.css';
@@ -26,7 +26,7 @@ export default function Restart(props: Props) {
       <div ref={divRef} tabIndex={-1} />
       <Tooltip text="restart" showOnHover className={`restart ${className || ''}`}>
         <ButtonRounded ref={resetRef} onClick={resetHandler}>
-          <IconRefresh className="icon" />
+          <img src={refresh} className="icon" />
         </ButtonRounded>
       </Tooltip>
     </>

@@ -10,13 +10,13 @@ import {
   Legend,
   Line,
 } from 'recharts';
-import { TypingContext } from '../context/Typing.context';
-import { TypingResult } from '../types';
-import { addColorOpacity, getTimeSince } from '../helper';
-import  ButtonRounded  from '../UI/ButtomRounded/ButtomRounded';
-import PercentCircleChart from '../UI/PercentCircleChart/PercentCircleChart';
-import Tooltip from '../UI/Tooltip';
-import ResultCustomTooltip from '../components/ResultCustomToolTip/ResultCustomTooltip';
+import { TypingContext } from '../../../context/Typing.context';
+import { TypingResult } from '../../../types';
+import { addColorOpacity, getTimeSince } from '../../../helper';
+import  ButtonRounded  from '../../UI/ButtomRounded/ButtomRounded';
+import PercentCircleChart from '../../UI/PercentCircleChart/PercentCircleChart';
+import Tooltip from '../../UI/Tooltip';
+import ResultCustomTooltip from '../ResultCustomToolTip/ResultCustomTooltip';
 import "./Result.css"
 
 export type ResultOptions = {

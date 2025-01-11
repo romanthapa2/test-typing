@@ -4,18 +4,18 @@ import { TypemodeContext } from '../../context/TypeMode.context';
 import { getRandomQuoteByLength } from '../../services/Quoteable';
 import { TypingResult } from '../../types';
 import { getRandomWords, getTypingWords } from '../../helper/index';
+import lock from "../../../public/lock.svg"
 import  useSound  from '../../hooks/useSound';
-import { IconLock } from '@/assets/image';
 import typewriterSound from '@/assets/audio/typewriter.wav';
 import typingReducer, {initialState}  from './reducer/typing.reducer';
 import  Loading  from '../UI/Loading/Loading';
 import Input from './Input';
-import Restart from './Restart';
-import Counter from './Counter';
+import Restart from './Restart/Restart';
+import Counter from './Counter/Counter';
 import LoadingError from './LoadingError';
 import counterStyles from './Counter/Counter.module.scss';
 import styles from './typing.css';
-import Result from '../../result/Result';
+import Result from './result/Result';
 
 interface Props {
   testText?: string;
@@ -358,7 +358,7 @@ export default function Typing(props: Props) {
 
             {isCapsLock && (
               <div className={styles.capslock}>
-                <IconLock className={styles.icon} />
+                <img src={lock} className={styles.icon} />
                 <p>CAPS LOCK</p>
               </div>
             )}
