@@ -9,7 +9,7 @@ import  useSound  from '../../hooks/useSound';
 import typewriterSound from '@/assets/audio/typewriter.wav';
 import typingReducer, {initialState}  from './reducer/typing.reducer';
 import  Loading  from '../UI/Loading/Loading';
-import Input from './Input';
+import Input from './Input/Input';
 import Restart from './Restart/Restart';
 import Counter from './Counter/Counter';
 import LoadingError from './LoadingError';
