@@ -1,4 +1,4 @@
-import { QuoteLengthType } from '../types';
+import { QuoteLengthType } from '../../types';
 
 export const data = {
   apiUrl: import.meta.env.PROD ? '' : 'http://localhost:8080',

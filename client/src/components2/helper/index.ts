@@ -1,6 +1,6 @@
 
 import randomWords from 'random-words';
-import { TypingWords } from '../components/Typing/reducer/types';
+import { TypingWords } from '../Typing/reducer/types';
 import { data } from '../data';
 
 export function firstLetterUpperCase(word: string) {

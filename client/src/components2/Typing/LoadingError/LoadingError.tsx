@@ -1,5 +1,5 @@
 import { useContext, Fragment } from 'react';
-import { TypemodeContext } from '../../../context/TypeMode.context';
+import { TypemodeContext } from '../../context/TypeMode.context';
 import { ModalContext } from '@/context/modal.context';
 import { data } from '@/data';
 import { IconRedirect, IconTags } from '@/assets/image';

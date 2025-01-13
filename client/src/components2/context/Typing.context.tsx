@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from 'react';
-import { TypingResult } from '../types';
-import { ResultOptions } from '../types';
+import { TypingResult } from '../../types';
+import { ResultOptions } from '../../types';
 
 interface Context {
   typingStarted: boolean;

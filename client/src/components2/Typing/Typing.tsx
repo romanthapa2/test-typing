@@ -1,11 +1,11 @@
 import { useCallback, useContext, useEffect, useReducer, useState } from 'react';
-import { TypingContext } from '../../context/Typing.context';
-import { TypemodeContext } from '../../context/TypeMode.context';
+import { TypingContext } from '../context/Typing.context';
+import { TypemodeContext } from '../context/TypeMode.context';
 import { getRandomQuoteByLength } from '../../services/Quoteable';
 import { TypingResult } from '../../types';
-import { getRandomWords, getTypingWords } from '../../helper/index';
+import { getRandomWords, getTypingWords } from '../helper/index';
 import lock from "../../../public/lock.svg"
-import  useSound  from '../../hooks/useSound';
+import  useSound  from '../hooks/useSound';
 import typewriterSound from '@/assets/audio/typewriter.wav';
 import typingReducer, {initialState}  from './reducer/typing.reducer';
 import  Loading  from '../UI/Loading/Loading';

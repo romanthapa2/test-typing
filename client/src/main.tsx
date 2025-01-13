@@ -2,7 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
-import { TypingContextProvider } from './context/Typing.context.tsx'
+import { TypingContextProvider } from './components2/context/Typing.context.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

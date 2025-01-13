@@ -1,4 +1,4 @@
-import { QuoteLengthType } from '../types';
+import { QuoteLengthType } from '../../types';
 
 const API_URL = 'https://api.quotable.io';
 

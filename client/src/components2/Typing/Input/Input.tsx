@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef, useState } from 'react';
-import { TypingContext } from '../../../context/Typing.context';
+import { TypingContext } from '../../context/Typing.context';
 import { TypingWords } from '../reducer/types';
 import Caret from './caret/Caret'
 import "./Input.css"
