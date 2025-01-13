@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.5.0",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.49",
     "random-words": "^2.0.1",

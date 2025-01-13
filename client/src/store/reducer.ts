@@ -1,5 +1,5 @@
 import { RefObject } from "react";
-import { AnyAction, combineReducers } from "redux";
+import { combineReducers } from "redux";
 import {
     SET_CHAR,
     SET_WORD,
@@ -15,6 +15,7 @@ import {
     SET_CARET_REF,
     SET_TYPE,
 } from "./action";
+import { PayloadAction } from "@reduxjs/toolkit";
 
 export interface State {
     preferences: {
@@ -58,15 +59,15 @@ export const initialState: State = {
 
 const timerReducer = (
     state = initialState.time,
-    { type, payload }: AnyAction
+    { type, payload }: PayloadAction<number | NodeJS.Timeout>
 ) => {
     switch (type) {
         case TIMER_DECREMENT:
             return { ...state, timer: state.timer - 1 };
         case TIMER_SET:
-            return { ...state, timer: payload };
+            return { ...state, timer: payload as number};
         case TIMERID_SET:
-            return { ...state, timerId: payload };
+            return { ...state, timerId: payload as NodeJS.Timeout };
         default:
             return state;
     }
@@ -74,22 +75,23 @@ const timerReducer = (
 
 const wordReducer = (
     state = initialState.word,
-    { type, payload }: AnyAction
+    { type, payload }: PayloadAction
 ) => {
     switch (type) {
         case SET_CHAR:
             return { ...state, typedWord: payload };
         case SET_WORD:
             return { ...state, typedHistory: [...state.typedHistory, payload] };
-        case APPEND_TYPED_HISTORY:
-            const nextIdx = state.typedHistory.length + 1;
+        case APPEND_TYPED_HISTORY:{
+            const nextIdx  = state.typedHistory.length + 1;
             return {
                 ...state,
                 typedWord: "",
                 currWord: state.wordList[nextIdx],
                 typedHistory: [...state.typedHistory, state.typedWord],
             };
-        case PREV_WORD:
+        }
+        case PREV_WORD:{
             const prevIdx = state.typedHistory.length - 1;
             return {
                 ...state,
@@ -97,6 +99,7 @@ const wordReducer = (
                 typedWord: !payload ? state.typedHistory[prevIdx] : "",
                 typedHistory: state.typedHistory.splice(0, prevIdx),
             };
+        }
         case SET_REF:
             return {
                 ...state,
@@ -107,11 +110,15 @@ const wordReducer = (
                 ...state,
                 caretRef: payload,
             };
-        case SET_WORDLIST:
+        case SET_WORDLIST:{
+            if (!Array.isArray(payload)) {
+                throw new Error("Payload must be an array of strings");
+            }
+
             const areNotWords = payload.some((word: string) =>
                 word.includes(" ")
             );
-            var shuffledWordList: string[] = payload.sort(
+            let shuffledWordList: string[] = [...payload].sort(
                 () => Math.random() - 0.5
             );
             if (areNotWords)
@@ -125,6 +132,7 @@ const wordReducer = (
                 currWord: shuffledWordList[0],
                 wordList: shuffledWordList,
             };
+        }
         default:
             return state;
     }
@@ -132,7 +140,7 @@ const wordReducer = (
 
 const preferenceReducer = (
     state = initialState.preferences,
-    { type, payload }: AnyAction
+    { type, payload }: PayloadAction
 ) => {
     switch (type) {
         case SET_THEME:

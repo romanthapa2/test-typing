@@ -1,8 +1,8 @@
 import reducer from "./reducer";
-import { createStore } from "redux";
+import {configureStore} from "@reduxjs/toolkit"
 
-export const store = createStore(
+export const store = configureStore({
     reducer,
-    (window as any).__REDUX_DEVTOOLS_EXTENSION__ &&
-        (window as any).__REDUX_DEVTOOLS_EXTENSION__()
+    devTools: process.env.NODE_ENV !== 'production',
+}
 );
