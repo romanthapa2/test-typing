@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { setTimerId, timerDecrement } from "../store/wordSlice";
+import { setTimerId, timerDecrement } from "../store/timeSlice";
 
 const useStartTimer = () => {
     const dispatch = useDispatch();

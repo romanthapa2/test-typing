@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface TimeState {
     timer: number;
-    timerId: NodeJS.Timer | null;
+    timerId: number | NodeJS.Timeout | null;
 }
 
 const initialState: TimeState = {
@@ -20,7 +20,7 @@ const timeSlice = createSlice({
         timerSet(state, action: PayloadAction<number>) {
             state.timer = action.payload;
         },
-        setTimerId(state, action: PayloadAction<NodeJS.Timer | null>) {
+        setTimerId(state, action: PayloadAction<number | NodeJS.Timeout | null>) {
             state.timerId = action.payload;
         },
     },
