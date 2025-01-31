@@ -1,7 +1,7 @@
 import  resetTest  from "../helper/resetTest";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
-import "styleSheets/result.css";
+import "../styleSheets/result.css";
 
 export default function Result() {
     const {

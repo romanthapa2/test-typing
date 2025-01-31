@@ -1,23 +1,15 @@
-import { useEffect, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setRef, setCaretRef } from "../store/wordSlice";
+import { forwardRef, useRef } from "react";
+import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import "../styleSheets/test.css";
 
-export default function Test() {
+const Test =forwardRef<HTMLDivElement>((props,ref)=> {
     const {
         word: { typedWord, currWord, wordList, typedHistory },
         time: { timer },
     } = useSelector((state: RootState) => state);
-    const dispatch = useDispatch();
     const extraLetters = typedWord.slice(currWord.length).split("");
-    const activeWord = useRef<HTMLDivElement>(null);
     const caretRef = useRef<HTMLSpanElement>(null);
-
-    useEffect(() => {
-        dispatch(setRef(activeWord));
-        dispatch(setCaretRef(caretRef));
-    }, [dispatch]);
 
     return (
         <div className="test">
@@ -30,7 +22,7 @@ export default function Test() {
                         <div
                             key={word + idx}
                             className="word"
-                            ref={isActive ? activeWord : null}>
+                            ref={isActive ? ref : null}>
                             {isActive ? (
                                 <span
                                     ref={caretRef}
@@ -75,4 +67,6 @@ export default function Test() {
             </div>
         </div>
     );
-}
+})
+
+export default Test;

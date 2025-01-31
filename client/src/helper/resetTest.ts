@@ -22,8 +22,8 @@ const useResetTest = () => {
             dispatch(setTimerId(null));
         }
 
-        const words = await import(`wordlists/${type}.json`);
-        dispatch(setWordList(words.default));
+        // const words = await import(`wordlists/${type}.json`);
+        // dispatch(setWordList(words.default));
 
 
         dispatch(timerSet(timeLimit));

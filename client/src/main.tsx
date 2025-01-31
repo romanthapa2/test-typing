@@ -2,12 +2,13 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
-import { TypingContextProvider } from './components2/context/Typing.context.tsx'
+import { store } from './store/store.ts'
+import { Provider } from "react-redux";
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <TypingContextProvider>
-      <App />
-    </TypingContextProvider>
+    <Provider store={store}>
+            <App />
+        </Provider>
   </StrictMode>,
 )

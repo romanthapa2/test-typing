@@ -1,13 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RefObject } from "react";
 
 interface WordState {
     currWord: string;
     typedWord: string;
     typedHistory: string[];
     wordList: string[];
-    activeWordRefId: number | null;
-    caretRefId: string | null;
 }
 
 const initialState: WordState = {
@@ -15,8 +12,6 @@ const initialState: WordState = {
     typedWord: "",
     typedHistory: [],
     wordList: [],
-    activeWordRefId: null,
-    caretRefId: null,
 };
 
 const wordSlice = createSlice({
@@ -52,15 +47,6 @@ const wordSlice = createSlice({
             state.typedHistory = [];
             state.typedWord = "";
         },
-        setRef(state, action: PayloadAction<RefObject<HTMLDivElement>>) {
-            state.activeWordRefId = action.payload;
-        },
-        setCaretRef(
-            state,
-            action: PayloadAction<RefObject<HTMLSpanElement>>
-        ) {
-            state.caretRefId = action.payload;
-        },
     },
 });
 
@@ -70,7 +56,5 @@ export const {
     appendTypedHistory,
     backtrackWord,
     setWordList,
-    setRef,
-    setCaretRef,
 } = wordSlice.actions;
 export default wordSlice.reducer;

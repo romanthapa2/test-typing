@@ -3,17 +3,17 @@ import { useDispatch } from "react-redux";
 import { setTimerId, timerDecrement } from "../store/timeSlice";
 
 const useStartTimer = () => {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-    useEffect(() => {
-        const timerId = setInterval(() => {
-            dispatch(timerDecrement());
-        }, 1000);
+  useEffect(() => {
+    const timerId = setInterval(() => {
+      dispatch(timerDecrement());
+    }, 1000);
 
-        dispatch(setTimerId(timerId));
+    dispatch(setTimerId(timerId));
 
-        return () => clearInterval(timerId);
-    }, [dispatch]);
+    return () => clearInterval(timerId);
+  }, [dispatch]);
 };
 
 export default useStartTimer;

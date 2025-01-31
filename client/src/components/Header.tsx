@@ -63,6 +63,7 @@ export default function Header() {
     const theme = localStorage.getItem("theme") || "default";
     const type = localStorage.getItem("type") || "words";
     const time = parseInt(localStorage.getItem("time") || "60", 10);
+    
     import(`wordlists/${type}.json`).then((words) =>
       dispatch(setWordList(words.default))
     );
